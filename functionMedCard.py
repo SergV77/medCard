@@ -23,8 +23,11 @@ def parsDoctable(table):
     tab_list = []
     for tab in table.tables:
         for row in tab.rows:
+            temp_tab = []
             for cell in row.cells:
-                tab_list.append(cell.text)
+                temp_tab.append(cell.text)
+            if len(temp_tab) > 3:
+                tab_list.append(temp_tab)
     return tab_list
 
 #Парссинг текста
@@ -35,8 +38,16 @@ def parsDocText(doc):
         for row in table.rows:
             for cell in row.cells:
                 doc_list.append(cell.text)
-                tab_list = parsDoctable(cell)
+                tab_list += parsDoctable(cell)
     return doc_list, tab_list
+
+def getText(doc_file):
+    text = []
+    for paragraph in doc_file.paragraphs:
+        text += paragraph.text.split('\n')
+        # '\n'.join(paragraph.text)
+    if text != [""]:
+        return text
 
 
 #Открытие файлов doc
@@ -44,22 +55,12 @@ def openDoc(path):
     text = []
     table = []
     doc_file = docx.Document(path)
-    text, table = parsDocText(doc_file)
-    if len(table) != 0:
+    text = getText(doc_file)
+    if text != None:
         return text, table
     else:
-        try:
-            for paragraph in doc_file.paragraphs:
-                text.append(paragraph.text)
-                if '\n'.join(text) != '':
-                    return path, '\n'.join(text)
-        except:
-            print("Файл не читается")
-
-    text, table = parsDocText(doc_file)
-    return text, table
-
-
+        text, table = parsDocText(doc_file)
+        return text, table
 
 #Удаляем не нужные символы
 def clean_word(item):
@@ -69,14 +70,24 @@ def clean_word(item):
             item = item.replace('\xa0', ' ')
     return item.strip()
 
-def madeDictData(doc_list):
+def getDict(doc_list):
     dict_list = {}
-    for item in doc_list[0]:
-        if len(item) != 0:
+
+    for item in doc_list:
+        if len(item) != '':
             key = item.split(":")[0]
             value = item.split(":")[1:]
-            dict_list[key] = value
-    return dict_list
+            if key != '':
+                dict_list[key] = value
+    if dict_list != 0:
+        return dict_list
+
+
+def madeDictData(doc_list):
+    if type(doc_list) != list:
+        return getDict(doc_list[0])
+
+    return getDict(doc_list)
 
 # def madeListData(doc_list):
 #     new_dict = {}
@@ -90,3 +101,13 @@ def madeDictData(doc_list):
 #                 v = ''.join(v).replace(' ', ' ')
 #
 #     return dict_list
+
+#Открытие файлов doc
+# def openDoc(path):
+#     text = []
+#     table = []
+#     doc_file = docx.Document(path)
+#     text, table = parsDocText(doc_file)
+#
+#     # if len(table) != 0:
+#     return text, table

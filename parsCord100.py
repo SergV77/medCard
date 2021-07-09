@@ -6,6 +6,10 @@ from struct import unpack
 # doc = docx.Document('51.docx')
 #
 #
+#
+#
+
+
 paths = findDoc()
 print(paths)
 print(len(paths))
@@ -35,8 +39,7 @@ for path in paths:
 #     print(el)
 # print(len(data))
 
-# for el in big_table:
-#     print(el)
+
 
 dis = []
 sym = []
@@ -57,41 +60,43 @@ for el in dis:
 
 symptoms = {}
 for num, el in enumerate(sym):
-    # print(el)
+    print(el)
     if el[0] not in symptoms.keys():
         symptoms[el[0]] = [(el[1], clean_word(el[3]))]
     else:
         symptoms[el[0]].append((el[1], clean_word(el[3])))
 
-# for k, v in symptoms.items():
-#     print(k, ' - ', v)
+for k, v in symptoms.items():
+    print(k, ' - ', v)
+
+
 
 print(len(data))
 
-fieldnames = ['class', 'num_file', 'num_diagnosis', 'name_diagnosis']
-with open('db/epicrisis/outer/yTrain2.csv', mode='a', encoding='utf-8', newline='') as file:
-    file_writer = csv.writer(file, delimiter=',', lineterminator='\n')
-    file_writer.writerow(fieldnames)
-    for el in all_dis:
-        file_writer.writerow(el)
+# fieldnames = ['class', 'num_diagnosis', 'name_diagnosis']
+# with open('db/epicrisis/outer/yTrain.csv', mode='a', encoding='utf-8', newline='') as file:
+#     file_writer = csv.writer(file, delimiter=',', lineterminator='\n')
+#     file_writer.writerow(fieldnames)
+#     for el in all_dis:
+#         file_writer.writerow(el)
 
-
-fieldnames = ['class', 'num_file', 'name_symptoms']
-with open('db/epicrisis/outer/xTrain2.csv', mode='a', encoding='utf-8', newline='') as file:
-    file_writer = csv.writer(file, delimiter=',', lineterminator='\n')
-    file_writer.writerow(fieldnames)
-    for k, v in symptoms.items():
-        file_writer.writerow([k, *v])
-
+#
+# fieldnames = ['class', 'name_symptoms']
+# with open('db/epicrisis/outer/xTrain2.csv', mode='a', encoding='utf-8', newline='') as file:
+#     file_writer = csv.writer(file, delimiter=',', lineterminator='\n')
+#     file_writer.writerow(fieldnames)
+#     for k, v in symptoms.items():
+#         file_writer.writerow([k, (*v)])
+#
 # fieldnames = ['class', 'table_symptoms']
 # with open('db/epicrisis/outer/xTrain3.csv', mode='a', encoding='utf-8', newline='') as file:
 #     file_writer = csv.writer(file, delimiter=',', lineterminator='\n')
 #     file_writer.writerow(fieldnames)
-#     for el in big_table:
-#         file_writer.writerow([*el])
+#     for k, v in symptoms.items():
+#         file_writer.writerow([k, (*v)])
 
-# # for item in doc_list:
-# #     if len(item) != 0:
+# for item in doc_list:
+#     if len(item) != 0:
 #         key = item.split(":")[0]
 #         value = item.split(":")[1:]
 #         dict[key] = value
