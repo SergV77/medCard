@@ -18,6 +18,7 @@ pymorphy2 = "*"
 nltk = "*"
 pandas = "*"
 compoundfiles = "*"
+"pdfminer.six" = "*"
 
 [dev-packages]
 
