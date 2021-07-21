@@ -25,45 +25,134 @@ path2 = 'db/book/Liver_biliary tract_pancreas.txt'
 #
 doc = fitz.open(path)
 book_list = []
-for current_page in range(34, 182):
+for current_page in range(len(doc)):
     page_text = []
     page = doc.loadPage(current_page)
     page_text = page.get_text('text')
-    book_list.append(page_text.split(" "))
+    # book_list.append(page_text.split(" "))
+    book_list.append(page_text)
+    # with open(path2, mode='a', encoding='utf-8') as file:
+
 
 
 # print(book_list)
-for line in book_list:
-    for word in line:
-        if word == 'Глава':
-            print(word)
+new_book_list = reduce(lambda x,y: x + y, book_list)
+# print(new_book_list)
+
 #
-# regex_num1 = re.compile(r'Глава \d')
-# regex_num2 = re.compile(r'(\d\.\d\.\s[А-Я]\w+)\n')
-# regex_num3 = re.compile(r'(\d\.\d\.\d\. [А-Я]\w+\s\w+)')
-# regex_num4 = re.compile(r'[А-Я]\w+')
+# for el in book_list:
+#     print(el)
+
 #
-# # for i, el in enumerate(book_list):
-# #     print(i, ' - ', type(el))
-# # #
+# test_dict = new_book_list.replace("\n", ' ')
+# test_dict = test_dict.replace("|", ' ')
+# test_dict = test_dict.replace("[", ' ')
+# test_dict = test_dict.replace("•", ' ')
+# test_dict = test_dict.replace("/", ' ')
+# test_dict = test_dict.replace("*", ' ')
+# test_dict = test_dict.replace(' . ', ' ')
+# test_dict = test_dict.replace('"', ' ')
+# test_dict = test_dict.replace("'", ' ')
+# test_dict = test_dict.replace("®", ' ')
+# test_dict = ' '.join(test_dict.split())
+# # for junk_char in "%$\\>//<+=@*|?!&":
+# #     test_dict.replace(junk_char, ' ')
+# # test_dict = test_dict.split(" ")
+# print(len(test_dict))
+# temp = []
+# temp_dict = {}
+# print(test_dict)
+# for el in test_dict:
+#     print(el)
+
+
+    # if el == 'Глава':
+    #     if len(temp) != 0:
+    #         print(' '.join(temp))
+    #         temp_dict[test_dict[test_dict.index(el):test_dict.index(el)+2]] = ' '.join(temp)
+    #
+    # else:
+    #     temp.append(test_dict[test_dict.index(el) + 1])
+
+
+
+# print(temp_dict)
+
+
+regex_num1 = re.compile(r'(Глава \d\d\n)')
+regex_num11 = re.compile(r'Глава \d\n')
+regex_num2 = re.compile(r'\n(\d\.\d\.\s[А-Я]\w+)\n')
+regex_num3 = re.compile(r'(\d\.\d\.\d\. [А-Я]\w+\s\w+)')
+regex_num4 = re.compile(r'[А-Я]\w+')
+
+
+# test_dict = new_book_list.split(' ')
+# print(test_dict)
+# for el in test_dict:
+#     if el == 'Глава':
+#         print(el)
+
+
+#
 # find_words = ['Жалобы', 'Анамнез']
 #
-# book_dict = {}
-# for i, el in enumerate(book_list):
-#     # print(i, '0 - ', el.replace('\n', ' '))
-#     if len(regex_num1.findall(el)) != 0:
-#         # print(i, '1 - ', regex_num1.findall(el)[0])
-#         if regex_num1.findall(el)[0] not in book_dict.keys():
-#             book_dict[regex_num1.findall(el)[0]] = el
-#         else:
-#             book_dict[regex_num1.findall(el)[0]] += el
-#     # print(i, '2 - ', regex_num2.findall(el))
-#     # print(i, '3 - ', regex_num3.findall(el))
-#     # print(i, '4 - ', regex_num4.findall(el))
+book_dict = {}
+for i, el in enumerate(book_list):
+    if len(regex_num11.findall(el)) != 0:
+        print(i, '1 - ', regex_num11.findall(el))
+
+    elif len(regex_num1.findall(el)) != 0:
+        print(i, '1 - ', regex_num1.findall(el))
+
+
+
+
+
+
+
+
+
+
+    # print(i, '0 - ', el.replace('\n', ' '))
+    #
+    #     # print(i, '1 - ', regex_num1.findall(el)[0])
+    #     if regex_num1.findall(el)[0] not in book_dict.keys():
+    #         book_dict[regex_num1.findall(el)[0]] = [el]
+    #     else:
+    #         book_dict[regex_num1.findall(el)[0]].append(el)
+    # print(i, '2 - ', regex_num2.findall(el))
+    # print(i, '3 - ', regex_num3.findall(el))
+    # print(i, '4 - ', regex_num4.findall(el))
+
 #
 # for k, v in book_dict.items():
 #     print(k, ' - ', v)
+
 #
+# val_dict = {}
+# for k, v in book_dict.items():
+#     if len(regex_num11.findall(v)) != 0:
+#         # print(v)
+#         print('1 - ', regex_num11.findall(v)[0])
+#         if regex_num11.findall(v)[0] not in val_dict.keys():
+#             val_dict[regex_num11.findall(v)[0]] = v
+#         else:
+#             val_dict[regex_num11.findall(v)[0]] += v
+
+
+#
+# for k, v in val_dict.items():
+#     print(regex_num11.findall(v)[0])
+#     print(v.split('regex_num11.findall(v)[0]'))
+#     for el in v.split('.'):
+#         print(k, ' - ', el)
+#         print('*'*150)
+#     # val_dict[regex_num11.findall(v)]
+#     # print(v)
+#     # for el in v:
+#     #     print('2 - ', regex_num11.findall(v))
+#
+# #
 
 
 
@@ -304,5 +393,48 @@ for line in book_list:
 #             print(regex_num.findall(i))
 #
 
+# doc = fitz.open(path)
+# book_list = []
+# for current_page in range(34, 182):
+#     page_text = []
+#     page = doc.loadPage(current_page)
+#     page_text = page.get_text('text')
+#     # book_list.append(page_text.split(" "))
+#     book_list.append(page_text)
+#
+#
+# # print(book_list)
+# # for line in book_list:
+# #     for word in line:
+# #         if word == 'Глава':
+# #             print(line)
+# # #
+# regex_num1 = re.compile(r'Глава \d')
+# regex_num2 = re.compile(r'(\d\.\d\.\s[А-Я]\w+)\n')
+# regex_num3 = re.compile(r'(\d\.\d\.\d\. [А-Я]\w+\s\w+)')
+# regex_num4 = re.compile(r'[А-Я]\w+')
+#
+# # for i, el in enumerate(book_list):
+# #     print(i, ' - ', type(el))
+# # #
+# find_words = ['Жалобы', 'Анамнез']
+#
+# book_dict = {}
+# for i, el in enumerate(book_list):
+#     # print(i, '0 - ', el.replace('\n', ' '))
+#     if len(regex_num1.findall(el)) != 0:
+#         # print(i, '1 - ', regex_num1.findall(el)[0])
+#         if regex_num1.findall(el)[0] not in book_dict.keys():
+#             book_dict[regex_num1.findall(el)[0]] = el
+#         else:
+#             book_dict[regex_num1.findall(el)[0]] += el
+#     # print(i, '2 - ', regex_num2.findall(el))
+#     # print(i, '3 - ', regex_num3.findall(el))
+#     # print(i, '4 - ', regex_num4.findall(el))
+#
+# for k, v in book_dict.items():
+#     print(k, ' - ', v)
+# #
+#
 
 
